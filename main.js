@@ -26,6 +26,29 @@ const renderTasks = () => {
   }
 };
 
+const getChildElementByClass = (parent, className, nth = 1) => {
+  let counter = 0;
+  for (const node of parent.childNodes) {
+    if (node.className === className) {
+      counter++;
+      if (counter === nth) return node;
+    }
+  }
+  return null;
+};
+
+const getChildElementByName = (parent, name, nth = 1) => {
+  let counter = 0;
+  for (const node of parent.childNodes) {
+    if (node.localName === name) {
+      counter++;
+      if (counter === nth) return node;
+    }
+  }
+  return null;
+};
+
+
 addTask.addEventListener("click", () => {
   popIt.style.display = "block";
   fogging.style.display = "block";
@@ -42,17 +65,28 @@ apply.addEventListener("click", (event) => {
   const user = document.querySelector(".userNew");
   const description = document.querySelector(".descriptionNew");
   const state = document.querySelector("select");
-console.log(currentTask);
 
-  if (+currentTask) {
-    const task = document.getElementById(currentTask)
-    console.log(task)
-    document.querySelector(`#${currentTask} .name h3`) = name.value
-    task.querySelector(".date p") = date.value
-    task.querySelector(".user p") = user.value
-    task.querySelector(".desc p") = description.value
-    task.querySelector(".state p") = state.value
+  if (currentTask) {
+    const task = document.getElementById(currentTask);
+    getChildElementByName(task, 'h3').innerHTML = name.value;
+    const content = getChildElementByClass(task, 'content');
+    getChildElementByName(content, 'p').innerHTML = date.value;
+    getChildElementByName(content, 'p', 2).innerHTML = user.value;
+    const desc = getChildElementByClass(task, 'desc');
+    getChildElementByName(desc, 'p').innerHTML = description.value;
+    const stateDiv = getChildElementByClass(task, 'state');
+    getChildElementByName(stateDiv, 'p').innerHTML = state.value;
     
+
+    // task.querySelector('h3') = name.value
+    // task.querySelector(".date p") = date.value
+    // task.querySelector(".user p") = user.value
+    // task.querySelector(".desc p") = description.value
+    // task.querySelector(".state p") = state.value
+    
+    popIt.style.display = "none";
+    fogging.style.display = "none";
+    currentTask = null;
     return;
   }
 
@@ -69,6 +103,8 @@ console.log(currentTask);
   renderTasks();
   popIt.style.display = "none";
   fogging.style.display = "none";
+  currentTask = null;
+  return;
 });
 
 input.addEventListener("input", () => {
