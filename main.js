@@ -77,13 +77,6 @@ apply.addEventListener("click", (event) => {
     const stateDiv = getChildElementByClass(task, 'state');
     getChildElementByName(stateDiv, 'p').innerHTML = state.value;
     
-
-    // task.querySelector('h3') = name.value
-    // task.querySelector(".date p") = date.value
-    // task.querySelector(".user p") = user.value
-    // task.querySelector(".desc p") = description.value
-    // task.querySelector(".state p") = state.value
-    
     popIt.style.display = "none";
     fogging.style.display = "none";
     currentTask = null;
@@ -112,12 +105,14 @@ input.addEventListener("input", () => {
   const items = document.querySelectorAll(".newTask");
   if (val) {
     for (const item of items) {
-      if (item.querySelector(".name").innerText.search(val) == -1) {
+      if (getChildElementByName(item, 'h3').innerText.search(val) == -1) {
         item.classList.add("hide");
       } else {
         item.classList.remove("hide");
       }
     }
+    return;
   }
+  renderTasks();
 });
 
