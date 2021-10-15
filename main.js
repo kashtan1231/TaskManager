@@ -85,6 +85,17 @@ const renderTasks = () => {
   }
 };
 
+const dateComp = (year, month, day, yearPop, monthPop, dayPop) => {
+  if (yearPop > year) return true;
+  else if (yearPop === year) {
+    if (monthPop > month) return true;
+    else if (monthPop === month) {
+      if (dayPop >= day) return true;
+      else return false;
+    } else return false;
+  } else return false;
+};
+
 const getChildElementByClass = (parent, className, nth = 1) => {
   let counter = 0;
   for (const node of parent.childNodes) {
@@ -124,7 +135,7 @@ addTask.addEventListener("click", () => {
 deletE.addEventListener("click", () => {
   if (currentTask) {
     tasks.splice(currentTask, 1);
-    console.dir(tasks)
+    console.dir(tasks);
     renderTasks();
   }
   console.log(currentTask);
@@ -141,6 +152,7 @@ cancer.addEventListener("click", () => {
 
 apply.addEventListener("click", (event) => {
   const { name, date, user, description, state } = getPopItValues();
+  const today = new Date();
 
   if (currentTask) {
     const task = document.getElementById(currentTask);
@@ -160,34 +172,48 @@ apply.addEventListener("click", (event) => {
     return;
   }
   if (name.value && date.value && user.value && state.value) {
-    const task = createNewTask(
-      name.value,
-      date.value,
-      user.value,
-      description.value,
-      state.value,
-      `${tasks.length}`
-    );
+    console.dir(today.getMonth());
 
-    let chek = false;
-    for (let i = 0; i < filter.children.length; i++) {
-      if (user.value === filter.options[i].innerHTML) {
-        chek = true;
+    const [yearPop, monthPop, dayPop] = date.value.split("-");
+    const [year, month, day] = [
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDay(),
+    ];
+    console.log("Pop: " + yearPop, monthPop, dayPop);
+    console.log("Today: " + year, month, day);
+    if (dateComp(year, month, day, yearPop, monthPop, dayPop)) {
+      const task = createNewTask(
+        name.value,
+        date.value,
+        user.value,
+        description.value,
+        state.value,
+        `${tasks.length}`
+      );
+
+      let chek = false;
+      for (let i = 0; i < filter.children.length; i++) {
+        if (user.value === filter.options[i].innerHTML) {
+          chek = true;
+        }
       }
-    }
 
-    if (!chek) {
-      const filUser = document.createElement("option");
-      filUser.innerHTML = user.value;
-      filter.appendChild(filUser);
-    }
+      if (!chek) {
+        const filUser = document.createElement("option");
+        filUser.innerHTML = user.value;
+        filter.appendChild(filUser);
+      }
 
-    tasks.push(task);
-    renderTasks();
-    popIt.style.display = "none";
-    fogging.style.display = "none";
-    currentTask = null;
-    attention.style.display = "none";
+      tasks.push(task);
+      renderTasks();
+      popIt.style.display = "none";
+      fogging.style.display = "none";
+      currentTask = null;
+      attention.style.display = "none";
+    } else {
+      attention.style.display = "block";
+    }
   } else {
     attention.style.display = "block";
   }
