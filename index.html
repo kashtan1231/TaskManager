@@ -12,9 +12,14 @@
 <body>
     <header>
         <input class="search" type="text" placeholder="Поиск по назваию">
-        <select class="filter">
-            <option value="Sample">Sample</option>
-        </select>
+
+        <div class="filterBox">
+            <select class="filter">
+                <option value="Sample">Все</option>
+            </select>
+
+            <button class="filterButton">Отфильтровать</button>
+        </div>
         <h1>TASK MANAGER</h1>
 
     </header>
@@ -23,7 +28,6 @@
 
         <div class="flexBox">
             <button class="addTask">+</button>
-
         </div>
 
         <div class="fogging"></div>

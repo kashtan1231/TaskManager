@@ -49,7 +49,5 @@ const createNewTask = (name, date, description, user, state, id) => {
 
   task.id = id;
 
-  console.log(task.id);
-
   return task;
 };

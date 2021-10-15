@@ -9,6 +9,7 @@ const apply = document.querySelector(".apply");
 const attention = document.querySelector(".attention");
 const fogging = document.querySelector(".fogging");
 const filter = document.querySelector(".filter");
+const filterButton = document.querySelector(".filterButton");
 const tasks = [];
 const users = [];
 let currentTask;
@@ -58,11 +59,11 @@ addTask.addEventListener("click", () => {
   const description = document.querySelector(".descriptionNew");
   const state = document.querySelector(".stateNew");
 
-  name.value = null;
+  name.value = "Name";
   date.value = null;
-  user.value = null;
-  description.value = null;
-  state.value = null;
+  user.value = "User";
+  description.value = "Desc";
+  state.value = "В процессе";
 
   popIt.style.display = "block";
   fogging.style.display = "block";
@@ -79,16 +80,19 @@ apply.addEventListener("click", (event) => {
   const date = document.querySelector(".dateNew");
   const user = document.querySelector(".userNew");
   const description = document.querySelector(".descriptionNew");
-  const state = document.querySelector("select");
+  const state = document.querySelector(".stateNew");
 
   if (currentTask) {
     const task = document.getElementById(currentTask);
     getChildElementByName(task, "h3").innerHTML = name.value;
+
     const content = getChildElementByClass(task, "content");
     getChildElementByName(content, "p").innerHTML = date.value;
     getChildElementByName(content, "p", 2).innerHTML = user.value;
+
     const desc = getChildElementByClass(task, "desc");
     getChildElementByName(desc, "p").innerHTML = description.value;
+
     const stateDiv = getChildElementByClass(task, "state");
     getChildElementByName(stateDiv, "p").innerHTML = state.value;
 
@@ -97,7 +101,7 @@ apply.addEventListener("click", (event) => {
     currentTask = null;
     return;
   }
-  if (name.value && date.value && user.value && state.value !== "Сталин") {
+  if (name.value && date.value && user.value && state.value) {
     const task = createNewTask(
       name.value,
       date.value,
@@ -106,18 +110,19 @@ apply.addEventListener("click", (event) => {
       state.value,
       `${tasks.length}`
     );
-    
-    users.push(user);
-for (const castomer of users) {
-  if (castomer.value !== user.value) {
-    const filUser = document.createElement("option");
-    filUser.innerHTML = user.value;
-    filter.appendChild(filUser);
-    
-  }
-}
-   
 
+    let chek = false;
+    for (let i = 0; i < filter.children.length; i++) {
+      if (user.value === filter.options[i].innerHTML) {
+        chek = true;
+      }
+    }
+
+    if (chek === false) {
+      const filUser = document.createElement("option");
+      filUser.innerHTML = user.value;
+      filter.appendChild(filUser);
+    }
 
     tasks.push(task);
     renderTasks();
@@ -127,6 +132,25 @@ for (const castomer of users) {
     return;
   } else {
     attention.style.display = "block";
+  }
+});
+
+filterButton.addEventListener("click", () => {
+  const index = filter.options.selectedIndex
+  const val = filter.options[index].innerHTML;
+  const items = document.querySelectorAll(".newTask");
+
+  for (const item of items) {
+    const content = getChildElementByClass(item, "content")
+    console.log(getChildElementByName(content, "p", 1).innerHTML)
+    if (getChildElementByName(content, "p", 2).innerHTML === "Suck") {
+      item.classList.add("hide");
+    } else {
+      item.classList.remove("hide");
+    }
+    // if (val === filter.options[0].innerHTML) {
+    //   item.classList.remove("hide");
+    // }
   }
 });
 
