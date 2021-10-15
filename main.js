@@ -63,7 +63,9 @@ const renderTasks = () => {
     flexBox.removeChild(htmlTask);
   }
 
-  for (const task of tasks) {
+  for (const taskId in tasks) {
+    const task = tasks[taskId];
+    task.id = taskId;
     flexBox.insertBefore(task, addTask);
     task.addEventListener("click", () => {
       const { taskName, taskDate, taskUser, taskDescription, taskState } =
@@ -126,6 +128,7 @@ deletE.addEventListener("click", () => {
     renderTasks();
   }
   console.log(currentTask);
+  currentTask = null;
   popIt.style.display = "none";
   fogging.style.display = "none";
 });
