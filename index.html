@@ -11,47 +11,59 @@
 
 <body>
     <header>
+        <input class="search" type="text" placeholder="Поиск по назваию">
+        <select class="filter">
+            <option value="Sample">Sample</option>
+        </select>
         <h1>TASK MANAGER</h1>
-        <input class="search" type="text">
-        
+
     </header>
 
     <div class="container">
 
         <div class="flexBox">
-        <button class="addTask">add sum dick</button>
-
+            <button class="addTask">+</button>
 
         </div>
 
         <div class="fogging"></div>
 
         <div class="popIt">
-            <label for="text">Название: </label>
-            <input class="nameNew" type="text">
-            <br>
-            <label for="date">Дата: </label>
-            <input class="dateNew" type="date">
-            <br>
-            <label for="text">Имя и фаилия: </label>
-            <input class="userNew" type="text">
-            <br>
-            <label for="text">Описание: </label>
-            <textarea class="descriptionNew" type="text"></textarea>
-            <br>
-            <select>
-                <option value="Сталин">Сталин</option>
-                <option value="К выполнению">К выполнению</option>
-                <option value="В процессе">В процессе</option>
-                <option value="Тестирование">Тестирование</option>
-                <option value="Готова">Готово</option>
-            </select>
-            <br>
-            <input class="cancer" type="button" value="Отмена">
-            <input class="apply" type="button" value="Ок">
+            <div class="attention">
+                <p>Заполните пустые поля</p>
+            </div>
+            <div class="nameBox">
+                <label for="text">Название: </label>
+                <input class="nameNew" type="text">
+            </div>
+            <div class="dateBox">
+                <label for="date">Дата: </label>
+                <input class="dateNew" type="date">
+            </div>
+            <div class="userBox">
+                <label for="text">Имя и фамилия: </label>
+                <input class="userNew" type="text">
+            </div>
+            <div class="descBox">
+                <label for="text">Описание: </label>
+                <textarea class="descriptionNew" type="text" placeholder="Необязательное поле"></textarea>
+            </div>
+            <div class="stateBox">
+                <label for="text">Статус:</label>
+                <select class="stateNew">
+                    <option value="К выполнению">К выполнению</option>
+                    <option value="В процессе">В процессе</option>
+                    <option value="Тестирование">Тестирование</option>
+                    <option value="Готова">Готово</option>
+                </select>
+            </div>
+            <div class="buttonBox">
+                <input class="cancer" type="button" value="Отмена">
+                <input class="apply" type="button" value="Ок">
+            </div>
         </div>
-        
-        
+
+
         <script src="newTask.js"></script>
         <script src="main.js"></script>
 </body>

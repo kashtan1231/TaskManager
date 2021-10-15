@@ -23,11 +23,9 @@ body {
   width: 95%;
   height: 110%;
   margin: auto;
-  /* margin-bottom: 30px; */
 }
 
 header {
-  
   background-color: rgba(252, 250, 250, 0.822);
   text-align: center;
   margin-bottom: 60px;
@@ -35,37 +33,44 @@ header {
   padding-bottom: 10px;
   box-shadow: 0 5px 20px rgba(26, 26, 26, 0.418);
 
-  
+  position: relative;
+}
+
+.search {
+  padding: 5px;
+
+  font-family: inherit;
+  margin-bottom: 60px;
+
+  position: absolute;
+  right: 20px;
 }
 
 .flexBox {
   /* border: 1px solid rgb(43, 0, 145); */
-  
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 30px;
 }
 
 .newTask,
-.clearTask,
 .addTask {
   background-color: rgb(240, 234, 226);
   position: relative;
-  /* width: 200px;*/
   height: 170px;
-  /* float: left; */
   padding: 15px 3%;
   border-radius: 10px;
   box-shadow: 5px 4px 12px rgba(26, 26, 26, 0.678);
   border: rgba(49, 49, 49, 0.404) solid 1px;
-  
 
   transition-duration: 0.8s;
-  /* transition-property: background, color; */
 }
 
 .addTask {
-  height: 11px;
+  min-height: 200px;
+  width: 100%;
+  height: 100%;
+  font-size: 100px;
 }
 
 .newTask:hover {
@@ -83,7 +88,7 @@ header {
 .addTask:focus {
   margin-top: 1000px;
   transition-delay: 0.1s;
-} 
+}
 
 .qwerty {
   margin-top: 1000px;
@@ -134,21 +139,110 @@ header {
 
 .popIt {
   position: fixed;
-  background-color: teal;
-  width: 450px;
-  height: 400px;
+  background-color: rgb(240, 234, 226);
+  width: 600px;
+  height: 500px;
   right: 0;
   left: 0;
   top: 0;
   bottom: 0;
   margin: auto;
-
+  border-radius: 20px;
   display: none;
 }
 
-.addTask {
+.nameBox,
+.dateBox,
+.userBox,
+.descBox,
+.stateBox {
+  font-size: 20px;
+  margin: 30px 50px 15px 30px;
+}
+
+.stateBox {
+  margin-top: 0;
+}
+
+.nameNew,
+.dateNew,
+.userNew,
+.descriptionNew {
   width: 100%;
-  height: 100%;
+  border: none;
+  background-color: transparent;
+  border-bottom: black solid 1px;
+  padding: 10px 10px 0px 10px;
+  outline: none;
+
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.descriptionNew {
+  height: 100px;
+  border: rgba(0, 0, 0, 0.322) solid 1px;
+  border-radius: 20px;
+}
+
+.stateNew {
+  margin-top: 5px;
+  font-family: inherit;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.stateNew:hover,
+.cancer:hover,
+.apply:hover {
+  cursor: pointer;
+}
+
+.buttonBox {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.cancer,
+.apply {
+  font-size: 15px;
+  font-family: inherit;
+  padding: 10px;
+  border-radius: 100px;
+
+  border: none;
+  background-color: white;
+  color: black;
+}
+
+.stateNew:hover,
+.cancer:hover,
+.apply:hover {
+  transition-duration: 0.5s;
+  background-color: black;
+  color: white;
+}
+
+.apply:hover {
+  color: aquamarine;
+}
+
+.cancer:hover {
+  color:crimson;
+}
+
+.attention {
+  position: absolute;
+  /* margin-left: 200px; */
+  margin-top: 10px;
+  left: 50%;
+  transform: translate(-50%);
+  color: tomato;
+  display: none;
 }
 
 .fogging {
@@ -163,7 +257,7 @@ header {
   background-color: rgba(0, 0, 0, 0.486);
 
   display: none;
-} 
+}
 
 .hide {
   display: none;
