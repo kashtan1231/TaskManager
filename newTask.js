@@ -1,4 +1,4 @@
-const createNewTask = (name, date, description, user, state, id) => {
+const createNewTask = (name, date, user, description, state, id) => {
   const task = document.createElement("div");
   task.className = "newTask";
 

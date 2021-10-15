@@ -196,6 +196,7 @@ header {
 }
 
 .stateNew:hover,
+.delete:hover,
 .cancer:hover,
 .apply:hover {
   cursor: pointer;
@@ -207,6 +208,7 @@ header {
   bottom: 20px;
 }
 
+.delete,
 .cancer,
 .apply {
   font-size: 15px;
@@ -220,6 +222,7 @@ header {
 }
 
 .stateNew:hover,
+.delete:hover,
 .cancer:hover,
 .apply:hover {
   transition-duration: 0.5s;
@@ -227,12 +230,16 @@ header {
   color: white;
 }
 
+.delete:hover {
+  color:crimson;
+}
+
 .apply:hover {
   color: aquamarine;
 }
 
 .cancer:hover {
-  color:crimson;
+  color:white;
 }
 
 .attention {

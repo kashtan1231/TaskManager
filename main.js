@@ -4,6 +4,7 @@ const input = document.querySelector(".search");
 const flexBox = document.querySelector(".flexBox");
 const addTask = document.querySelector(".addTask");
 const popIt = document.querySelector(".popIt");
+const deletE = document.querySelector(".delete");
 const cancer = document.querySelector(".cancer");
 const apply = document.querySelector(".apply");
 const attention = document.querySelector(".attention");
@@ -14,6 +15,48 @@ const tasks = [];
 const users = [];
 let currentTask;
 
+const getPopItValues = () => {
+  const name = document.querySelector(".nameNew");
+  const date = document.querySelector(".dateNew");
+  const user = document.querySelector(".userNew");
+  const description = document.querySelector(".descriptionNew");
+  const state = document.querySelector(".stateNew");
+
+  return { name, date, user, description, state };
+};
+
+const getTaskValues = (task) => {
+  const taskName = getChildElementByName(task, "h3");
+
+  const content = getChildElementByClass(task, "content");
+  const taskDate = getChildElementByName(content, "p");
+  const taskUser = getChildElementByName(content, "p", 2);
+
+  const desc = getChildElementByClass(task, "desc");
+  const taskDescription = getChildElementByName(desc, "p");
+
+  const stateDiv = getChildElementByClass(task, "state");
+  const taskState = getChildElementByName(stateDiv, "p");
+
+  return { taskName, taskDate, taskUser, taskDescription, taskState };
+};
+
+const setPopItValues = (
+  namePop,
+  datePop,
+  userPop,
+  descriptionPop,
+  statePop
+) => {
+  const { name, date, user, description, state } = getPopItValues();
+
+  name.value = namePop;
+  date.value = datePop;
+  user.value = userPop;
+  description.value = descriptionPop;
+  state.value = statePop;
+};
+
 const renderTasks = () => {
   const htmlTasks = document.querySelectorAll(".newTask");
   for (const htmlTask of htmlTasks) {
@@ -23,6 +66,16 @@ const renderTasks = () => {
   for (const task of tasks) {
     flexBox.insertBefore(task, addTask);
     task.addEventListener("click", () => {
+      const { taskName, taskDate, taskUser, taskDescription, taskState } =
+        getTaskValues(task);
+      setPopItValues(
+        taskName.innerHTML,
+        taskDate.innerHTML,
+        taskUser.innerHTML,
+        taskDescription.innerHTML,
+        taskState.innerHTML
+      );
+      console.dir(taskState);
       popIt.style.display = "block";
       fogging.style.display = "block";
       currentTask = task.id;
@@ -53,11 +106,7 @@ const getChildElementByName = (parent, name, nth = 1) => {
 };
 
 addTask.addEventListener("click", () => {
-  const name = document.querySelector(".nameNew");
-  const date = document.querySelector(".dateNew");
-  const user = document.querySelector(".userNew");
-  const description = document.querySelector(".descriptionNew");
-  const state = document.querySelector(".stateNew");
+  const { name, date, user, description, state } = getPopItValues();
 
   name.value = "Name";
   date.value = null;
@@ -70,31 +119,37 @@ addTask.addEventListener("click", () => {
   attention.style.display = "none";
 });
 
-cancer.addEventListener("click", () => {
+deletE.addEventListener("click", () => {
+  if (currentTask) {
+    tasks.splice(currentTask, 1);
+    console.dir(tasks)
+    renderTasks();
+  }
+  console.log(currentTask);
   popIt.style.display = "none";
   fogging.style.display = "none";
 });
 
+cancer.addEventListener("click", () => {
+  popIt.style.display = "none";
+  fogging.style.display = "none";
+  currentTask = null;
+});
+
 apply.addEventListener("click", (event) => {
-  const name = document.querySelector(".nameNew");
-  const date = document.querySelector(".dateNew");
-  const user = document.querySelector(".userNew");
-  const description = document.querySelector(".descriptionNew");
-  const state = document.querySelector(".stateNew");
+  const { name, date, user, description, state } = getPopItValues();
 
   if (currentTask) {
     const task = document.getElementById(currentTask);
-    getChildElementByName(task, "h3").innerHTML = name.value;
 
-    const content = getChildElementByClass(task, "content");
-    getChildElementByName(content, "p").innerHTML = date.value;
-    getChildElementByName(content, "p", 2).innerHTML = user.value;
+    const { taskName, taskDate, taskUser, taskDescription, taskState } =
+      getTaskValues(task);
 
-    const desc = getChildElementByClass(task, "desc");
-    getChildElementByName(desc, "p").innerHTML = description.value;
-
-    const stateDiv = getChildElementByClass(task, "state");
-    getChildElementByName(stateDiv, "p").innerHTML = state.value;
+    taskName.innerHTML = name.value;
+    taskDate.innerHTML = date.value;
+    taskUser.innerHTML = user.value;
+    taskDescription.innerHTML = description.value;
+    taskState.innerHTML = state.value;
 
     popIt.style.display = "none";
     fogging.style.display = "none";
@@ -118,7 +173,7 @@ apply.addEventListener("click", (event) => {
       }
     }
 
-    if (chek === false) {
+    if (!chek) {
       const filUser = document.createElement("option");
       filUser.innerHTML = user.value;
       filter.appendChild(filUser);
@@ -129,28 +184,28 @@ apply.addEventListener("click", (event) => {
     popIt.style.display = "none";
     fogging.style.display = "none";
     currentTask = null;
-    return;
+    attention.style.display = "none";
   } else {
     attention.style.display = "block";
   }
 });
 
 filterButton.addEventListener("click", () => {
-  const index = filter.options.selectedIndex
+  const index = filter.options.selectedIndex;
   const val = filter.options[index].innerHTML;
   const items = document.querySelectorAll(".newTask");
 
   for (const item of items) {
-    const content = getChildElementByClass(item, "content")
-    console.log(getChildElementByName(content, "p", 1).innerHTML)
-    if (getChildElementByName(content, "p", 2).innerHTML === "Suck") {
+    const content = getChildElementByClass(item, "content");
+    console.log(getChildElementByName(content, "p", 1).innerHTML);
+    if (getChildElementByName(content, "p", 2).innerHTML !== val) {
       item.classList.add("hide");
     } else {
       item.classList.remove("hide");
     }
-    // if (val === filter.options[0].innerHTML) {
-    //   item.classList.remove("hide");
-    // }
+    if (val === filter.options[0].innerHTML) {
+      item.classList.remove("hide");
+    }
   }
 });
 
