@@ -8,6 +8,7 @@ const deletE = document.querySelector(".delete");
 const cancer = document.querySelector(".cancer");
 const apply = document.querySelector(".apply");
 const attention = document.querySelector(".attention");
+const attentionDate = document.querySelector(".attentionDate")
 const fogging = document.querySelector(".fogging");
 const filter = document.querySelector(".filter");
 const filterButton = document.querySelector(".filterButton");
@@ -77,20 +78,21 @@ const renderTasks = () => {
         taskDescription.innerHTML,
         taskState.innerHTML
       );
-      console.dir(taskState);
+      
       popIt.style.display = "block";
       fogging.style.display = "block";
+      deletE.style.display = "inline";
       currentTask = task.id;
     });
   }
 };
 
 const dateComp = (year, month, day, yearPop, monthPop, dayPop) => {
-  if (yearPop > year) return true;
-  else if (yearPop === year) {
-    if (monthPop > month) return true;
-    else if (monthPop === month) {
-      if (dayPop >= day) return true;
+  if (+yearPop > +year) return true;
+  else if (+yearPop === +year) {
+    if (+monthPop > +month) return true;
+    else if (+monthPop === +month) {
+      if (+dayPop >= +day) return true;
       else return false;
     } else return false;
   } else return false;
@@ -130,15 +132,14 @@ addTask.addEventListener("click", () => {
   popIt.style.display = "block";
   fogging.style.display = "block";
   attention.style.display = "none";
+  deletE.style.display = "none";
 });
 
 deletE.addEventListener("click", () => {
   if (currentTask) {
     tasks.splice(currentTask, 1);
-    console.dir(tasks);
     renderTasks();
   }
-  console.log(currentTask);
   currentTask = null;
   popIt.style.display = "none";
   fogging.style.display = "none";
@@ -172,17 +173,14 @@ apply.addEventListener("click", (event) => {
     return;
   }
   if (name.value && date.value && user.value && state.value) {
-    console.dir(today.getMonth());
-
     const [yearPop, monthPop, dayPop] = date.value.split("-");
     const [year, month, day] = [
       today.getFullYear(),
-      today.getMonth(),
-      today.getDay(),
+      today.getMonth() + 1,
+      today.getDate(),
     ];
-    console.log("Pop: " + yearPop, monthPop, dayPop);
-    console.log("Today: " + year, month, day);
-    if (dateComp(year, month, day, yearPop, monthPop, dayPop)) {
+
+    if (dateComp(year, month, day, yearPop, monthPop, dayPop) === true) {
       const task = createNewTask(
         name.value,
         date.value,
@@ -211,11 +209,14 @@ apply.addEventListener("click", (event) => {
       fogging.style.display = "none";
       currentTask = null;
       attention.style.display = "none";
+      attentionDate.style.display = "none";
     } else {
-      attention.style.display = "block";
+      attentionDate.style.display = "block";
+      attention.style.display = "none";
     }
   } else {
     attention.style.display = "block";
+    attentionDate.style.display = "none";
   }
 });
 
@@ -226,7 +227,7 @@ filterButton.addEventListener("click", () => {
 
   for (const item of items) {
     const content = getChildElementByClass(item, "content");
-    console.log(getChildElementByName(content, "p", 1).innerHTML);
+
     if (getChildElementByName(content, "p", 2).innerHTML !== val) {
       item.classList.add("hide");
     } else {
