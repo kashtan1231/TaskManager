@@ -123,11 +123,11 @@ const getChildElementByName = (parent, name, nth = 1) => {
 addTask.addEventListener("click", () => {
   const { name, date, user, description, state } = getPopItValues();
 
-  name.value = "Name";
+  name.value = null;
   date.value = null;
-  user.value = "User";
-  description.value = "Desc";
-  state.value = "В процессе";
+  user.value = null;
+  description.value = null;
+  state.value = null;
 
   popIt.style.display = "block";
   fogging.style.display = "block";
