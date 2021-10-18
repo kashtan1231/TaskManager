@@ -192,14 +192,14 @@ apply.addEventListener("click", (event) => {
 
       let chek = false;
       for (let i = 0; i < filter.children.length; i++) {
-        if (user.value === filter.options[i].innerHTML) {
+        if (user.value.trim() === filter.options[i].innerHTML.trim()) {
           chek = true;
         }
       }
 
       if (!chek) {
         const filUser = document.createElement("option");
-        filUser.innerHTML = user.value;
+        filUser.innerHTML = user.value.trim();
         filter.appendChild(filUser);
       }
 
@@ -228,7 +228,7 @@ filterButton.addEventListener("click", () => {
   for (const item of items) {
     const content = getChildElementByClass(item, "content");
 
-    if (getChildElementByName(content, "p", 2).innerHTML !== val) {
+    if (getChildElementByName(content, "p", 2).innerHTML.trim() !== val.trim()) {
       item.classList.add("hide");
     } else {
       item.classList.remove("hide");
